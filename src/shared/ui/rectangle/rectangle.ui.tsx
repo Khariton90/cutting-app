@@ -20,13 +20,18 @@ interface RectangleUiProps extends RectangleProps {
 
 export function RectangleUi(props: RectangleUiProps): JSX.Element {
 	const { children, x, y, width, height } = props
-
+	console.log(x)
 	return (
-		<>
-			<Container x={x} y={y} width={width} height={height}>
-				<PixiRectangle {...props} />
-				{children}
-			</Container>
-		</>
+		<Container x={x} y={y} width={width} height={height}>
+			<PixiRectangle
+				x={0}
+				y={0}
+				color={props.color}
+				id={props.id}
+				width={props.width}
+				height={props.height}
+			/>
+			{children}
+		</Container>
 	)
 }

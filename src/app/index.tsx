@@ -1,5 +1,5 @@
 import './global.css'
-import { Board } from '../features/Board'
+import { Board } from '../features/board'
 import { observer } from 'mobx-react-lite'
 import { Header } from '../shared/ui/header'
 import { Nav } from '../shared/ui/nav'

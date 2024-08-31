@@ -10,9 +10,12 @@ export function SheetItemUi({
 	rectangle,
 	cutList,
 }: SheetItemProps): JSX.Element {
+	console.log(cutList.length)
 	return (
 		<RectangleUi {...rectangle}>
-			{cutList.length ? cutList.map(item => <RectangleUi {...item} />) : null}
+			{cutList.length
+				? cutList.map(item => <RectangleUi key={item.id} {...item} />)
+				: null}
 		</RectangleUi>
 	)
 }

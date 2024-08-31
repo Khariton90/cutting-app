@@ -16,3 +16,9 @@ export interface RectangleProps {
 	height: number
 	color: string
 }
+
+export interface Size {
+	id: string
+	width: number
+	height: number
+}
