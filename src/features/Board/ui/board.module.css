@@ -1,0 +1,16 @@
+.container {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	gap: 20px;
+	width: 100%;
+}
+
+.boardHeader {
+	width: 100%;
+	grid-column: 1/4;
+}
+
+.boardSheetList {
+	border: 1px solid #ccc;
+	padding: 10px;
+}
