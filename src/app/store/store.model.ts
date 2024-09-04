@@ -24,3 +24,12 @@ export const CutSheet = types
 			return getParent(self)
 		},
 	}))
+
+export const ProductItem = types.model('ProductItem', {
+	id: types.identifierNumber,
+	code: types.number,
+	title: types.string,
+	width: types.number,
+	height: types.number,
+	depth: types.number,
+})
