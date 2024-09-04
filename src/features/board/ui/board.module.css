@@ -19,7 +19,8 @@
 
 .canvasWrapper {
 	display: flex;
-	align-items: center;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .boardCanvas {
@@ -44,7 +45,7 @@
 	gap: 150px;
 	align-items: center;
 	height: max-content;
-	padding: 100px;
+	padding: 10px;
 }
 
 .canvas {

@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Box, Link, Typography } from '@mui/material'
 import { Product } from '../../../shared'
 import { MouseEvent } from 'react'
 
@@ -20,21 +20,25 @@ export function SearchResults({
 	}
 
 	if (!results.length) {
-		return <Typography sx={{ p: 4 }}>Ничего не найдено</Typography>
+		return (
+			<Box sx={{ p: 4 }}>
+				<Typography>Ничего не найдено</Typography>
+			</Box>
+		)
 	}
 
 	return (
-		<>
+		<Box sx={{ p: 4 }}>
 			{results.map(item => (
-				<Typography key={item.id} sx={{ p: 2 }}>
-					<a
+				<Typography key={item.id}>
+					<Link
 						href={item.code.toString()}
 						onClick={evt => handleClick(evt, item)}
 					>
 						{item.title}
-					</a>
+					</Link>
 				</Typography>
 			))}
-		</>
+		</Box>
 	)
 }

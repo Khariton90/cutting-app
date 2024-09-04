@@ -37,6 +37,7 @@ export function SearchPopper({
 	const onClick = (product: Product) => {
 		if (!productStore.currentProduct) {
 			productStore.setCurrent(product)
+			setCurrentProduct(() => product)
 			return
 		}
 		if (product.code === productStore.currentProduct.code) {

@@ -1,29 +1,13 @@
-import { getParent, types } from 'mobx-state-tree'
+import { types } from 'mobx-state-tree'
 
 export const Cut = types.model('Cut', {
-	id: types.string,
+	id: types.identifierNumber,
 	x: types.number,
 	y: types.number,
 	width: types.number,
 	height: types.number,
 	color: types.string,
 })
-
-export const CutSheet = types
-	.model('CutSheet', {
-		id: types.identifier,
-		x: types.number,
-		y: types.number,
-		width: types.number,
-		height: types.number,
-		qty: types.number,
-		segments: types.array(Cut),
-	})
-	.views(self => ({
-		get parent() {
-			return getParent(self)
-		},
-	}))
 
 export const ProductItem = types.model('ProductItem', {
 	id: types.identifierNumber,
@@ -32,4 +16,13 @@ export const ProductItem = types.model('ProductItem', {
 	width: types.number,
 	height: types.number,
 	depth: types.number,
+})
+
+export const CutSheet = types.model('CutSheet', {
+	id: types.identifierNumber,
+	qty: types.number,
+	width: types.number,
+	height: types.number,
+	// product: ProductItem,
+	// segments: types.array(Cut),
 })

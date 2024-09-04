@@ -23,13 +23,11 @@ export default function AlertDialog({
 			aria-labelledby='alert-dialog-title'
 			aria-describedby='alert-dialog-description'
 		>
-			<DialogTitle id='alert-dialog-title'>
-				{'Замена листа распила'}
-			</DialogTitle>
+			<DialogTitle id='alert-dialog-title'>Замена листа распила</DialogTitle>
 			<DialogContent>
 				<DialogContentText id='alert-dialog-description'>
-					При замене листа распила все несохраненные изменения будут утеряны.
-					Хотите продолжить?
+					При замене продукта для распила все несохраненные изменения будут
+					утеряны. Хотите продолжить?
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions>

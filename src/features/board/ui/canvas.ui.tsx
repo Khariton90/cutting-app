@@ -47,5 +47,11 @@ export function Canvas({ segments }: CanvasProps) {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null)
 	const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
 
+	useEffect(() => {
+		if (canvasRef.current) {
+			setContext(canvasRef.current.getContext('2d'))
+		}
+	}, [canvasRef])
+
 	return <canvas className={styles.canvas} ref={canvasRef}></canvas>
 }
