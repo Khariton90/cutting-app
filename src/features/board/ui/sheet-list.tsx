@@ -1,85 +1,30 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import Divider from '@mui/material/Divider'
-import ListItemText from '@mui/material/ListItemText'
-import Typography from '@mui/material/Typography'
-import { ListItemAvatar } from '@mui/material'
 import { useStore } from '@/shared/libs'
 import { observer } from 'mobx-react-lite'
+import { SheetItem } from '@/entities/sheet-item'
+import styles from './board.module.css'
 
 export function SheetListUi() {
 	const { sheetStore } = useStore()
+	const sx = {
+		width: '100%',
+		maxWidth: 360,
+	}
 
 	return (
-		<>
-			<List
-				sx={{
-					width: '100%',
-					maxWidth: 360,
-				}}
-			>
+		<div className={styles.boardSheetList}>
+			<h2>Листы</h2>
+			<List sx={sx}>
 				{sheetStore.currentSheet ? (
-					<>
-						<ListItem
-							alignItems='flex-start'
-							sx={{ display: 'flex', flexDirection: 'column' }}
-						>
-							<ListItemAvatar></ListItemAvatar>
-							<ListItemText
-								primary='Плита OSB 2440 × 1220× 10 мм'
-								secondary={
-									<>
-										<Typography
-											component='span'
-											variant='body2'
-											sx={{ color: 'text.primary', display: 'inline' }}
-										>
-											Количество 4:
-										</Typography>
-										<Typography>— Количество деталей 10…</Typography>
-									</>
-								}
-							/>
-						</ListItem>
-						<Divider variant='fullWidth' component='li' />
-					</>
+					<SheetItem item={sheetStore.currentSheet} />
 				) : null}
 			</List>
-
-			<List
-				sx={{
-					width: '100%',
-					maxWidth: 360,
-				}}
-			>
+			<List sx={sx}>
 				{sheetStore.cutSheetList.length
-					? sheetStore.cutSheetList.map(sheetItem => (
-							<ListItem
-								alignItems='flex-start'
-								sx={{ display: 'flex', flexDirection: 'column' }}
-							>
-								<ListItemAvatar></ListItemAvatar>
-								<ListItemText
-									primary='Плита OSB 2440 × 1220× 10 мм'
-									secondary={
-										<>
-											<Typography
-												component='span'
-												variant='body2'
-												sx={{ color: 'text.primary', display: 'inline' }}
-											>
-												Количество {sheetItem.qty}:
-											</Typography>
-											{' — Количество деталей 10…'}
-										</>
-									}
-								/>
-							</ListItem>
-					  ))
+					? sheetStore.cutSheetList.map(item => <SheetItem item={item} />)
 					: null}
 			</List>
-		</>
+		</div>
 	)
 }
 

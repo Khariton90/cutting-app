@@ -20,7 +20,7 @@
 
 .boardCanvas {
 	min-width: 800px;
-	background: url(../../../shared/assets/bg-canvas.webp) center center;
+	background: url(@/shared/assets/bg-canvas.webp) center center;
 	background-size: contain;
 	position: relative;
 	height: 500px;
@@ -41,4 +41,9 @@
 	align-items: center;
 	height: max-content;
 	padding: 10px;
+}
+
+.boardSheetList {
+	padding: 10px;
+	border: 1px solid #ccc;
 }

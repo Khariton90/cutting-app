@@ -4,11 +4,11 @@ import styles from './board.module.css'
 import { SheetList } from './sheet-list'
 import { Button, Typography } from '@mui/material'
 import Divider from '@mui/material/Divider'
-import { CommonCuts } from './common-cuts.ui'
 import { Segment } from '@/shared/types'
 import { Canvas } from '@/entities/canvas'
 import { FormDetails } from '@/entities/form-details'
 import { setIdNumber, useStore } from '@/shared/libs'
+import { CommonCutList } from '@/features/common-cut-list'
 
 export function BoardUi(): JSX.Element {
 	const { productStore, sheetStore } = useStore()
@@ -40,29 +40,28 @@ export function BoardUi(): JSX.Element {
 		<main className='main'>
 			<div className={styles.container}>
 				<BoardHeader />
-				<div className={styles.boardSheetList}>
-					<h2>Листы</h2>
-					<div className='sheetItem'>
-						<SheetList />
-					</div>
-				</div>
+				<SheetList />
 				<div className={styles.canvasWrapper}>
-					<Typography>
-						Материал:
-						{productStore.currentProduct
-							? productStore.currentProduct.title
-							: null}
-					</Typography>
-
-					<div className={styles.boardCanvas}>
-						<div className={styles.wrapper}>
-							{productStore.currentProduct ? (
-								<Canvas segments={segments} />
-							) : null}
+					{productStore.currentProduct ? (
+						<>
+							<Typography>
+								Материал: {productStore.currentProduct.title}
+							</Typography>
+							<div className={styles.boardCanvas}>
+								<div className={styles.wrapper}>
+									{productStore.currentProduct ? (
+										<Canvas segments={segments} />
+									) : null}
+								</div>
+							</div>
+						</>
+					) : (
+						<div className={styles.boardCanvas}>
+							<div className={styles.wrapper}></div>
 						</div>
-					</div>
+					)}
 					<Divider variant='fullWidth' component='p' sx={{ m: 2 }} />
-					<CommonCuts />
+					<CommonCutList />
 					<Divider variant='fullWidth' component='p' sx={{ m: 2 }} />
 					<Typography>
 						2400 x 1200 | Количество - {sheetStore.currentSheet?.qty}
