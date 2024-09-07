@@ -1,0 +1,11 @@
+.footer {
+	grid-column: 1/4;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.footer__link {
+	color: inherit;
+}

@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import { BoardHeader } from './board-header'
-import { FormDetails } from './form-details'
-import { Canvas } from './canvas.ui'
-import { Segment } from '../../../shared'
-import { setIdNumber, useStore } from '../../../shared/libs'
 import styles from './board.module.css'
 import { SheetList } from './sheet-list'
 import { Button, Typography } from '@mui/material'
 import Divider from '@mui/material/Divider'
 import { CommonCuts } from './common-cuts.ui'
+import { Segment } from '@/shared/types'
+import { Canvas } from '@/entities/canvas'
+import { FormDetails } from '@/entities/form-details'
+import { setIdNumber, useStore } from '@/shared/libs'
 
 export function BoardUi(): JSX.Element {
 	const { productStore, sheetStore } = useStore()

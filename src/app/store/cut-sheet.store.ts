@@ -1,6 +1,6 @@
 import { getParent, types } from 'mobx-state-tree'
 import { CutSheet } from './store.model'
-import { Sheet } from '../../shared'
+import { Sheet } from '@/shared/types'
 
 export const CutSheetStore = types
 	.model('CutSheetStore', {

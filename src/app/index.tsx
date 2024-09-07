@@ -1,9 +1,10 @@
 import './global.css'
-import { Board } from '../features/board'
+import { Board } from '@/features/board'
 import { observer } from 'mobx-react-lite'
-import { Header } from '../shared/ui/header'
-import { Nav } from '../shared/ui/nav'
-import { Aside } from '../widgets/aside'
+import { Header } from '@/shared/ui/header'
+import { Nav } from '@/shared/ui/nav'
+import { Aside } from '@/widgets/aside'
+import { Footer } from '@/shared/ui/footer'
 
 function Main(): JSX.Element {
 	return (
@@ -12,7 +13,7 @@ function Main(): JSX.Element {
 			<Nav />
 			<Board />
 			<Aside />
-			<footer className='footer'>footer</footer>
+			<Footer />
 		</div>
 	)
 }

@@ -1,2 +1,2 @@
-export * from './types'
-export * from './ui/mui'
+export * from './ui'
+export * from './mocks/products'

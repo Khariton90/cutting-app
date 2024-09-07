@@ -1,5 +1,5 @@
 import { types, Instance } from 'mobx-state-tree'
-import { products } from '../../shared/mocks/products'
+import { products } from '@/shared'
 import { ProductStore } from './product.store'
 import { CutSheetStore } from './cut-sheet.store'
 

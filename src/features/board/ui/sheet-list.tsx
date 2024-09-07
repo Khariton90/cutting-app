@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider'
 import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
 import { ListItemAvatar } from '@mui/material'
-import { useStore } from '../../../shared/libs'
+import { useStore } from '@/shared/libs'
 import { observer } from 'mobx-react-lite'
 
 export function SheetListUi() {
@@ -37,7 +37,7 @@ export function SheetListUi() {
 										>
 											Количество 4:
 										</Typography>
-										{' — Количество деталей 10…'}
+										<Typography>— Количество деталей 10…</Typography>
 									</>
 								}
 							/>

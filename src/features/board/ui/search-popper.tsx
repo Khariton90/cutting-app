@@ -1,9 +1,9 @@
 import { Popover } from '@mui/material'
-import { Product } from '../../../shared'
-import { useStore } from '../../../shared/libs'
+import { Product } from '@/shared/types'
+import { useStore } from '@/shared/libs'
 import { useState } from 'react'
-import AlertDialog from './alert-dialog'
-import { SearchResults } from './search-results'
+import { SearchResults } from '@/entities/search-result'
+import AlertDialog from '@/entities/alert-dialog/alert-dialog'
 
 type SearchPopperProps = {
 	id: string | undefined

@@ -1,11 +1,8 @@
-import styles from './board.module.css'
-// import { useStore } from '../../../shared/libs'
+import styles from './form-details.module.css'
 
 export function FormDetails(): JSX.Element {
-	// const { sheetStore } = useStore()
-
 	return (
-		<div className={styles.boardSheetList}>
+		<div className={styles.container}>
 			<h2>Детали</h2>
 			<form className={styles.formDetails}>
 				<fieldset className='fieldset'>

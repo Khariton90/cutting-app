@@ -4,12 +4,12 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import SearchIcon from '@mui/icons-material/Search'
 import styles from './board.module.css'
-import { useStore } from '../../../shared/libs'
+import { useStore } from '@/shared/libs'
 import { useState, ChangeEvent, FocusEvent } from 'react'
-import { Product } from '../../../shared'
+import { Product } from '@/shared/types'
 import { SearchPopper } from './search-popper'
 import { observer } from 'mobx-react-lite'
-import { Search, SearchIconWrapper, StyledInputBase } from '../../../shared'
+import { Search, SearchIconWrapper, StyledInputBase } from '@/shared'
 
 function filterProduct(product: Product, search: string) {
 	return (

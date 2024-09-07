@@ -1,6 +1,6 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react'
-import styles from './board.module.css'
-import { Segment } from '../../../shared'
+import styles from './canvas.module.css'
+import { Segment } from '@/shared/types'
 
 interface IRect {
 	id?: number
