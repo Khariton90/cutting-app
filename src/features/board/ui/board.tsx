@@ -4,23 +4,26 @@ import styles from './board.module.css'
 import { SheetList } from './sheet-list'
 import { Button, Typography } from '@mui/material'
 import Divider from '@mui/material/Divider'
-import { Segment } from '@/shared/types'
+import { CommonCut } from '@/shared/types'
 import { Canvas } from '@/entities/canvas'
 import { FormDetails } from '@/entities/form-details'
 import { setIdNumber, useStore } from '@/shared/libs'
 import { CommonCutList } from '@/features/common-cut-list'
+import { useState } from 'react'
 
 export function BoardUi(): JSX.Element {
 	const { productStore, sheetStore } = useStore()
-	const segments: Segment[] = [
-		{
-			id: setIdNumber(),
-			x: 0,
-			y: 0,
-			width: 50,
-			height: 50,
-		},
-	]
+	const [commonCurrent, setCommonCurrent] = useState(CommonCut.Horizontal)
+
+	//TODO const segments: Segment[] = [
+	// 	{
+	// 		id: setIdNumber(),
+	// 		x: 0,
+	// 		y: 0,
+	// 		width: 50,
+	// 		height: 50,
+	// 	},
+	// ]
 
 	const saveSheet = () => {
 		if (productStore.currentProduct) {
@@ -29,11 +32,15 @@ export function BoardUi(): JSX.Element {
 				qty: 1,
 				width: productStore.currentProduct.width,
 				height: productStore.currentProduct.height,
+				segments: [],
 			}
 
-			sheetStore.addCurrent(null)
 			sheetStore.addToList(sheet)
 		}
+	}
+
+	const onChangeCommon = (value: CommonCut) => {
+		setCommonCurrent(() => value)
 	}
 
 	return (
@@ -50,22 +57,22 @@ export function BoardUi(): JSX.Element {
 							<div className={styles.boardCanvas}>
 								<div className={styles.wrapper}>
 									{productStore.currentProduct ? (
-										<Canvas segments={segments} />
+										<Canvas commonCurrent={commonCurrent} />
 									) : null}
 								</div>
 							</div>
 						</>
 					) : (
 						<div className={styles.boardCanvas}>
-							<div className={styles.wrapper}></div>
+							<div className={styles.wrapper}>
+								<Canvas commonCurrent={commonCurrent} />
+							</div>
 						</div>
 					)}
 					<Divider variant='fullWidth' component='p' sx={{ m: 2 }} />
-					<CommonCutList />
+					<CommonCutList onChangeCommon={onChangeCommon} />
 					<Divider variant='fullWidth' component='p' sx={{ m: 2 }} />
-					<Typography>
-						2400 x 1200 | Количество - {sheetStore.currentSheet?.qty}
-					</Typography>
+					<Typography>2400 x 1200 | Количество -</Typography>
 					<Typography>
 						Количество деталей 22 | Площадь деталей - 5.52 м.кв.
 					</Typography>

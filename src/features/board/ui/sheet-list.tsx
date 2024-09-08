@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import List from '@mui/material/List'
 import { useStore } from '@/shared/libs'
 import { observer } from 'mobx-react-lite'
@@ -15,13 +16,10 @@ export function SheetListUi() {
 		<div className={styles.boardSheetList}>
 			<h2>Листы</h2>
 			<List sx={sx}>
-				{sheetStore.currentSheet ? (
-					<SheetItem item={sheetStore.currentSheet} />
-				) : null}
-			</List>
-			<List sx={sx}>
 				{sheetStore.cutSheetList.length
-					? sheetStore.cutSheetList.map(item => <SheetItem item={item} />)
+					? sheetStore.cutSheetList.map(item => (
+							<SheetItem key={item.id} item={item} />
+					  ))
 					: null}
 			</List>
 		</div>

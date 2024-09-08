@@ -15,7 +15,7 @@ export default function AlertDialog({
 	openAlert,
 	handleClickClose,
 	onChangeProduct,
-}: AlertDialogProps) {
+}: AlertDialogProps): JSX.Element {
 	return (
 		<Dialog
 			open={openAlert}

@@ -4,8 +4,8 @@ import { Sheet } from '@/shared/types'
 
 export const CutSheetStore = types
 	.model('CutSheetStore', {
-		currentSheet: types.maybeNull(CutSheet),
 		cutSheetList: types.array(CutSheet),
+		selectedSheet: types.maybeNull(types.safeReference(CutSheet)),
 	})
 	.views(self => ({
 		get parent() {
@@ -13,9 +13,6 @@ export const CutSheetStore = types
 		},
 	}))
 	.actions(self => ({
-		addCurrent(sheet: Sheet | null) {
-			self.currentSheet = sheet ? { ...sheet } : null
-		},
 		addToList(sheet: Sheet) {
 			self.cutSheetList.push(sheet)
 		},

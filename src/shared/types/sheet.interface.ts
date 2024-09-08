@@ -1,5 +1,6 @@
 // import { Product } from './product.interface'
-// import { Segment } from './segment.interface'
+
+import { Segment } from './segment.interface'
 
 export interface Sheet {
 	id: number
@@ -7,5 +8,5 @@ export interface Sheet {
 	width: number
 	height: number
 	//TODO product: Product
-	//TODO segments: Segment[]
+	segments?: Segment[]
 }

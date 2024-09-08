@@ -22,7 +22,7 @@ export function SheetItem({ item }: SheetItemProps): JSX.Element {
 						>
 							Количество {item.qty}:
 						</Typography>
-						<Typography component='p'>Количество деталей 20</Typography>
+						{'Количество деталей 20'}
 					</>
 				}
 			/>

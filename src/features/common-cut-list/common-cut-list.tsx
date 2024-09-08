@@ -1,13 +1,16 @@
 import { CommonCutUi } from '@/entities/common-cut'
 import { CommonCut } from '@/shared/types'
 import { Box } from '@mui/material'
-import { useState } from 'react'
 
-export function CommonCutList(): JSX.Element {
-	const [, setCommonValue] = useState<CommonCut | undefined>()
+type CommonCutListProps = {
+	onChangeCommon: (value: CommonCut) => void
+}
 
+export function CommonCutList({
+	onChangeCommon,
+}: CommonCutListProps): JSX.Element {
 	const onChange = (value: CommonCut) => {
-		setCommonValue(() => value)
+		onChangeCommon(value)
 	}
 
 	return (

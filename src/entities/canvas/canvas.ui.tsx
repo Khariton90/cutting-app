@@ -1,49 +1,98 @@
-import { MouseEvent, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './canvas.module.css'
-import { Segment } from '@/shared/types'
+import { CommonCut } from '@/shared/types'
 
-interface IRect {
-	id?: number
-	x: number
-	y: number
-	width: number
-	height: number
-}
-export function isCheckAABB(entity: IRect, area: IRect) {
-	console.log(
-		entity.x < area.x + area.width &&
-			entity.x + entity.width > area.x &&
-			entity.y < area.y + area.height &&
-			entity.y + entity.height > area.y
-	)
-}
+const STROKE_COLOR = '#FF0000'
+const GRID_COLOR = '#B7EFF0'
+const GRID_CANVAS = 25
 
-function draw(context: CanvasRenderingContext2D, segment: Segment) {
-	context.fillStyle = 'transparent'
-	context.strokeStyle = 'blue'
-	context.strokeRect(segment.x, segment.y, segment.width, segment.height)
-	context.fillRect(segment.x, segment.y, segment.width, segment.height)
-}
-
-function getMousePos(
-	evt: MouseEvent<HTMLCanvasElement>,
-	canvas: HTMLCanvasElement | null
-) {
-	if (!canvas) {
-		return false
+const drawGrid = (context: CanvasRenderingContext2D) => {
+	context.clearRect(0, 0, context.canvas.width, context.canvas.height)
+	context.strokeStyle = GRID_COLOR
+	for (let i = 0; i <= context.canvas.height; i = i + GRID_CANVAS) {
+		context.moveTo(0, i)
+		context.lineTo(context.canvas.width, i)
+		context.stroke()
+		context.closePath()
 	}
-	const rect = canvas.getBoundingClientRect()
-	return {
-		x: (evt.clientX - rect.left) / (rect.right - rect.left),
-		y: (evt.clientY - rect.top) / (rect.bottom - rect.top),
+	for (let i = 0; i <= context.canvas.width; i = i + GRID_CANVAS) {
+		context.moveTo(i, 0)
+		context.lineTo(i, context.canvas.height)
+		context.stroke()
+		context.closePath()
 	}
+}
+
+const drawHorizontal = (context: CanvasRenderingContext2D) => {
+	const canvasWidth = context.canvas.width
+	const canvasHeight = context.canvas.height
+	context.beginPath()
+	context.rect(0, 0, canvasWidth, canvasHeight / 2)
+	context.rect(0, canvasHeight / 2, canvasWidth, canvasHeight / 2)
+	context.strokeStyle = STROKE_COLOR
+	context.stroke()
+	context.closePath()
+}
+
+const drawVertical = (context: CanvasRenderingContext2D) => {
+	const canvasWidth = context.canvas.width
+	const canvasHeight = context.canvas.height
+	const rectWidth = canvasWidth / 2
+	context.beginPath()
+	context.rect(0, 0, rectWidth, canvasHeight)
+	context.rect(rectWidth, 0, rectWidth, canvasHeight)
+	context.strokeStyle = STROKE_COLOR
+	context.stroke()
+	context.closePath()
+}
+
+const drawCross = (context: CanvasRenderingContext2D) => {
+	const canvasWidth = context.canvas.width
+	const canvasHeight = context.canvas.height
+	const rectWidth = canvasWidth / 2
+	const rectHeight = canvasHeight / 2
+	context.beginPath()
+	context.rect(0, 0, rectWidth, rectHeight)
+	context.rect(rectWidth, 0, rectWidth, rectHeight)
+	context.rect(0, rectHeight, rectWidth, rectHeight)
+	context.rect(rectWidth, rectHeight, rectWidth, rectHeight)
+	context.strokeStyle = STROKE_COLOR
+	context.stroke()
+	context.closePath()
+}
+
+const drawSixSection = (context: CanvasRenderingContext2D) => {
+	const canvasWidth = context.canvas.width
+	const canvasHeight = context.canvas.height
+	const rectWidth = canvasWidth / 3
+	const rectHeight = canvasHeight / 3
+	context.beginPath()
+
+	for (let i = 0; i <= canvasWidth; i += rectWidth) {
+		context.rect(i, 0, rectWidth, rectHeight)
+		context.rect(i, rectHeight, rectWidth, rectHeight)
+		context.rect(i, canvasHeight - rectHeight, rectWidth, rectHeight)
+		context.strokeStyle = STROKE_COLOR
+		context.stroke()
+		context.closePath()
+	}
+}
+
+const CommonCutList = {
+	[CommonCut.Cross]: (context: CanvasRenderingContext2D) => drawCross(context),
+	[CommonCut.Horizontal]: (context: CanvasRenderingContext2D) =>
+		drawHorizontal(context),
+	[CommonCut.SixSections]: (context: CanvasRenderingContext2D) =>
+		drawSixSection(context),
+	[CommonCut.Vertical]: (context: CanvasRenderingContext2D) =>
+		drawVertical(context),
 }
 
 type CanvasProps = {
-	segments: Segment[]
+	commonCurrent: CommonCut
 }
 
-export function Canvas({ segments }: CanvasProps) {
+export function Canvas({ commonCurrent }: CanvasProps): JSX.Element {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null)
 	const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
 
@@ -52,6 +101,15 @@ export function Canvas({ segments }: CanvasProps) {
 			setContext(canvasRef.current.getContext('2d'))
 		}
 	}, [canvasRef])
+
+	useEffect(() => {
+		if (!context) {
+			return
+		}
+
+		drawGrid(context)
+		CommonCutList[commonCurrent](context)
+	}, [context, commonCurrent])
 
 	return <canvas className={styles.canvas} ref={canvasRef}></canvas>
 }

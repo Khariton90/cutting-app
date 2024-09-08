@@ -5,7 +5,7 @@ import { CutSheetStore } from './cut-sheet.store'
 
 const RootStore = types.model('RootStore', {
 	sheetStore: types.optional(CutSheetStore, {
-		currentSheet: null,
+		selectedSheet: null,
 		cutSheetList: [],
 	}),
 	productStore: types.optional(ProductStore, {

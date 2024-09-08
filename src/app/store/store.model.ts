@@ -6,7 +6,6 @@ export const Cut = types.model('Cut', {
 	y: types.number,
 	width: types.number,
 	height: types.number,
-	color: types.string,
 })
 
 export const ProductItem = types.model('ProductItem', {
@@ -23,6 +22,9 @@ export const CutSheet = types.model('CutSheet', {
 	qty: types.number,
 	width: types.number,
 	height: types.number,
-	// product: ProductItem,
-	// segments: types.array(Cut),
+})
+
+export const Segments = types.model('Segments', {
+	id: types.identifierNumber,
+	list: types.array(Cut),
 })
