@@ -1,6 +1,6 @@
 import { CommonCutUi } from '@/entities/common-cut'
 import { CommonCut } from '@/shared/types'
-import { Box } from '@mui/material'
+import styles from './common-cut-list.module.css'
 
 type CommonCutListProps = {
 	onChangeCommon: (value: CommonCut) => void
@@ -14,16 +14,16 @@ export function CommonCutList({
 	}
 
 	return (
-		<Box sx={{ display: 'flex', gap: 2 }}>
-			<form className='common-cuts'>
-				{Object.keys(CommonCut).map(value => (
+		<form className={styles.form}>
+			{Object.keys(CommonCut).map(value =>
+				value !== CommonCut.Unknown ? (
 					<CommonCutUi
 						key={value}
 						onChange={onChange}
 						value={value as CommonCut}
 					/>
-				))}
-			</form>
-		</Box>
+				) : null
+			)}
+		</form>
 	)
 }

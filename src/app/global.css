@@ -11,6 +11,11 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 }
 
+img {
+	max-width: 100%;
+	height: auto;
+}
+
 .app {
 	display: grid;
 	grid-template-columns: auto 1fr 400px;
@@ -22,8 +27,7 @@ body {
 .header,
 .nav,
 .main,
-.aside,
-.footer {
+.aside {
 	border: 1px solid var(--grey-color);
 }
 
@@ -31,18 +35,18 @@ body {
 .footer {
 	grid-column: 1/4;
 }
+
 .main {
 	width: 100%;
 }
 
 .nav {
 	font-size: 12px;
-	border: 1px solid var(--grey-color);
 }
 
 .nav-list {
 	list-style: none;
-	padding: 0;
+	padding: 16px 8px;
 	margin: 0;
 }
 
@@ -51,4 +55,17 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	border: 0;
+	padding: 0;
+	white-space: nowrap;
+	clip-path: inset(100%);
+	clip: rect(0 0 0 0);
+	overflow: hidden;
 }

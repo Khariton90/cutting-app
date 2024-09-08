@@ -5,17 +5,17 @@ export function FormDetails(): JSX.Element {
 		<div className={styles.container}>
 			<h2>Детали</h2>
 			<form className={styles.formDetails}>
-				<fieldset className='fieldset'>
-					<legend>#</legend>
+				<fieldset className={styles.fieldset}>
+					<legend className={styles.legend}># 1</legend>
 					<input
-						className='base-Input-input'
+						className={styles.input}
 						type='number'
 						name='width'
 						tabIndex={1}
 					/>
 					<input
 						type='number'
-						className='base-Input-input'
+						className={styles.input}
 						name='height'
 						tabIndex={2}
 					/>

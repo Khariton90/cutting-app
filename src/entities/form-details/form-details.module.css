@@ -2,3 +2,20 @@
 	border: 1px solid #ccc;
 	padding: 10px;
 }
+
+.fieldset {
+	border: 1px solid var(--grey-color);
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+	margin: 12px 0;
+}
+
+.legend {
+	font-size: 1.4rem;
+	font-weight: 500;
+}
+
+.input {
+	padding: 8px;
+}

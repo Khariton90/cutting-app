@@ -1,0 +1,18 @@
+<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <rect stroke-width="2" id="svg_4" height="0" width="4.8" y="61.2" x="93.2" stroke="#000" fill="#fff"/>
+  <rect id="svg_6" height="0.8" width="2.4" y="310" x="-143.6" stroke="#000" fill="#fff"/>
+  <rect id="svg_11" height="0" width="0.38835" y="56.21359" x="-73.68932" stroke="#000" fill="#fff"/>
+  <rect id="svg_12" height="0" width="0.81633" y="86.93886" x="147.75527" stroke="#000" fill="#fff"/>
+  <rect id="svg_13" height="1.42857" width="0" y="78.36742" x="148.57159" stroke="#000" fill="#fff"/>
+  <rect stroke="#000" id="svg_14" height="0" width="0.61225" y="83.26538" x="146.12261" fill="#fff"/>
+  <rect stroke="#000" stroke-width="4" id="svg_16" height="52.65314" width="53.87763" y="3.46935" x="2.8571" fill="#fff"/>
+  <rect fill="#fff" stroke="#000" opacity="NaN" x="806" y="392" width="0" height="0" id="svg_1"/>
+  <rect fill="#fff" stroke="#000" opacity="NaN" x="817" y="395" width="0" height="0" id="svg_2"/>
+  <rect fill="#fff" stroke="#000" opacity="NaN" x="968" y="471" width="0" height="0" id="svg_3"/>
+  <rect fill="#fff" stroke="#000" opacity="NaN" x="812" y="395" width="0" height="0" id="svg_5"/>
+  <line id="svg_9" y2="55.70695" x2="30" y1="3.52185" x1="29.74293" stroke-width="4" stroke="#000" fill="none"/>
+ </g>
+
+</svg>

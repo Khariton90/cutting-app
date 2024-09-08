@@ -13,17 +13,7 @@ import { useState } from 'react'
 
 export function BoardUi(): JSX.Element {
 	const { productStore, sheetStore } = useStore()
-	const [commonCurrent, setCommonCurrent] = useState(CommonCut.Horizontal)
-
-	//TODO const segments: Segment[] = [
-	// 	{
-	// 		id: setIdNumber(),
-	// 		x: 0,
-	// 		y: 0,
-	// 		width: 50,
-	// 		height: 50,
-	// 	},
-	// ]
+	const [commonCurrent, setCommonCurrent] = useState(CommonCut.Unknown)
 
 	const saveSheet = () => {
 		if (productStore.currentProduct) {
@@ -72,7 +62,7 @@ export function BoardUi(): JSX.Element {
 					<Divider variant='fullWidth' component='p' sx={{ m: 2 }} />
 					<CommonCutList onChangeCommon={onChangeCommon} />
 					<Divider variant='fullWidth' component='p' sx={{ m: 2 }} />
-					<Typography>2400 x 1200 | Количество -</Typography>
+					<Typography>2400 x 1200 | Количество - 1</Typography>
 					<Typography>
 						Количество деталей 22 | Площадь деталей - 5.52 м.кв.
 					</Typography>
