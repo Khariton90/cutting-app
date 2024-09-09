@@ -35,12 +35,20 @@ export function FormDetails(): JSX.Element {
 		}))
 	}
 
+	const deleteDetail = (id: number) => {
+		setDetails(prev => prev.filter(item => item.id !== id))
+	}
+
 	return (
 		<div className={styles.container}>
 			<h2>Детали</h2>
 			<form className={styles.formDetails}>
 				{details.map(item => (
-					<FieldsetDetails key={item.id} detail={item} />
+					<FieldsetDetails
+						key={item.id}
+						detail={item}
+						deleteDetail={deleteDetail}
+					/>
 				))}
 
 				<fieldset className={styles.fieldset} onBlur={createDetail}>
