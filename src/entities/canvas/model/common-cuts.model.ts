@@ -30,7 +30,6 @@ export class CommonCutsModel {
 		if (value === CommonCut.Unknown) {
 			return
 		}
-
 		return this.state[value]()
 	}
 
@@ -52,26 +51,12 @@ export class CommonCutsModel {
 			},
 		]
 
-		this.view.beginPath()
-
-		for (let i = 0; i < segments.length; i++) {
-			this.view.rect(
-				segments[i].x,
-				segments[i].y,
-				segments[i].width,
-				segments[i].height
-			)
-		}
-		this.view.strokeStyle = this.STROKE_COLOR
-		this.view.stroke()
-		this.view.closePath()
-
+		this.draw(segments)
 		return segments
 	}
 
 	public readonly drawVertical = (): Segment[] => {
 		const rectWidth = this.CANVAS_WIDTH / 2
-
 		const segments: Segment[] = [
 			{
 				id: setIdNumber(1),
@@ -89,25 +74,13 @@ export class CommonCutsModel {
 			},
 		]
 
-		this.view.beginPath()
-		for (let i = 0; i < segments.length; i++) {
-			this.view.rect(
-				segments[i].x,
-				segments[i].y,
-				segments[i].width,
-				segments[i].height
-			)
-		}
-		this.view.strokeStyle = this.STROKE_COLOR
-		this.view.stroke()
-		this.view.closePath()
+		this.draw(segments)
 		return segments
 	}
 
 	public readonly drawCross = (): Segment[] => {
 		const rectWidth = this.CANVAS_WIDTH / 2
 		const rectHeight = this.CANVAS_HEIGHT / 2
-
 		const segments: Segment[] = [
 			{ id: 1, x: 0, y: 0, width: rectWidth, height: rectHeight },
 			{ id: 1, x: rectWidth, y: 0, width: rectWidth, height: rectHeight },
@@ -121,27 +94,13 @@ export class CommonCutsModel {
 			},
 		]
 
-		this.view.beginPath()
-		for (let i = 0; i < segments.length; i++) {
-			segments[i].id = setIdNumber() + i
-			this.view.rect(
-				segments[i].x,
-				segments[i].y,
-				segments[i].width,
-				segments[i].height
-			)
-		}
-
-		this.view.strokeStyle = this.STROKE_COLOR
-		this.view.stroke()
-		this.view.closePath()
+		this.draw(segments)
 		return segments
 	}
 
 	public readonly drawSixSection = (): Segment[] => {
 		const rectWidth = this.CANVAS_WIDTH / 3
 		const rectHeight = this.CANVAS_HEIGHT / 3
-
 		const segments: Segment[] = []
 
 		for (let i = 0; i < this.CANVAS_WIDTH; i += rectWidth) {
@@ -172,20 +131,18 @@ export class CommonCutsModel {
 			segments.push(...row)
 		}
 
-		for (let i = 0; i < segments.length; i++) {
-			this.view.beginPath()
-			this.view.rect(
-				segments[i].x,
-				segments[i].y,
-				segments[i].width,
-				segments[i].height
-			)
+		this.draw(segments)
+		return segments
+	}
 
+	private draw(list: Segment[]) {
+		this.view.beginPath()
+		for (let i = 0; i < list.length; i++) {
+			this.view.beginPath()
+			this.view.rect(list[i].x, list[i].y, list[i].width, list[i].height)
 			this.view.strokeStyle = this.STROKE_COLOR
 			this.view.stroke()
 			this.view.closePath()
 		}
-
-		return segments
 	}
 }
