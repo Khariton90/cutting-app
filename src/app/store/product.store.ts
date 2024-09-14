@@ -1,4 +1,4 @@
-import { Product } from './../../shared/types/product.interface'
+import { Product } from '@/shared/types/product.interface'
 import { getParent, types } from 'mobx-state-tree'
 import { ProductItem } from './store.model'
 
