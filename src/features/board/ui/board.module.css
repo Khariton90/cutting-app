@@ -20,11 +20,8 @@
 
 .boardCanvas {
 	min-width: 800px;
-	background-size: contain;
 	position: relative;
 	height: 500px;
-	border: 2px solid #000;
-	background-color: #e6e6e6;
 }
 
 .wrapper {

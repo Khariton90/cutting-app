@@ -1,59 +1,141 @@
-import { CommonCut } from '@/shared/types'
-import { CommonCutsModel } from './common-cuts.model'
+import { ICut, ICutForm } from '@/features/board'
+import { Canvas } from 'fabric'
+import uuid from 'react-uuid'
+import { EmptyCutModel } from './empty-cut.model'
+import { CanvasView } from './canvas.view'
+
+export enum SheetSize {
+	Width = 500,
+	Height = 250,
+}
+
+export enum EmptyCut {
+	Right = 'Right',
+	Bottom = 'Bottom',
+}
 
 export class CanvasModel {
-	private STROKE_COLOR = '#FF0000'
-	private GRID_COLOR = '#B7EFF0'
-	private GRID_CANVAS = 25
-	private CANVAS_WIDTH = 0
-	private CANVAS_HEIGHT = 0
+	public cutList: ICut[] = []
+	public emptyCut: EmptyCutModel
+	public isCompleted = false
+	public gap = 1.318
 
-	private readonly view: CanvasRenderingContext2D
-	private commonCuts: CommonCutsModel
-
-	constructor(
-		context: CanvasRenderingContext2D,
-		width: number,
-		height: number
-	) {
-		this.view = context
-		this.CANVAS_WIDTH = width
-		this.CANVAS_HEIGHT = height
-
-		this.commonCuts = new CommonCutsModel(
-			this.view,
-			this.STROKE_COLOR,
-			this.CANVAS_WIDTH,
-			this.CANVAS_HEIGHT
-		)
-		this.drawGrid()
+	private maxHeight = 0
+	private isFirstRow = true
+	private view: CanvasView
+	private currentSheet: ICut
+	private sheetLowerBound = {
+		right: 0,
+		bottom: 0,
+	}
+	private canvas: Canvas
+	private prevPoint = {
+		x: 0,
+		y: 0,
+	}
+	private prevCutPoint = {
+		x: 0,
+		y: 0,
 	}
 
-	public clearCanvas() {
-		this.view.clearRect(0, 0, this.CANVAS_WIDTH, this.CANVAS_HEIGHT)
-	}
-
-	public setCommonCut = (value: CommonCut) => {
-		this.drawGrid()
-		this.commonCuts.update(value)
-	}
-
-	public drawGrid = () => {
-		this.clearCanvas()
-		this.view.strokeStyle = this.GRID_COLOR
-		for (let i = 0; i <= this.view.canvas.height; i = i + this.GRID_CANVAS) {
-			this.view.beginPath()
-			this.view.moveTo(0, i)
-			this.view.lineTo(this.CANVAS_WIDTH, i)
-			this.view.stroke()
-			this.view.closePath()
+	constructor(canvas: Canvas) {
+		this.canvas = canvas
+		this.emptyCut = new EmptyCutModel(this.canvas)
+		this.view = new CanvasView(this.canvas)
+		this.currentSheet = {
+			id: uuid(),
+			top: (this.height - SheetSize.Height) / 2,
+			left: (this.width - SheetSize.Width) / 2,
+			width: SheetSize.Width,
+			height: SheetSize.Height,
 		}
-		for (let i = 0; i <= this.view.canvas.width; i = i + this.GRID_CANVAS) {
-			this.view.beginPath()
-			this.view.moveTo(i, 0)
-			this.view.lineTo(i, this.view.canvas.height)
-			this.view.stroke()
-			this.view.closePath()
+		this.sheetLowerBound.right =
+			this.currentSheet.left + this.currentSheet.width
+		this.sheetLowerBound.bottom =
+			this.currentSheet.top + this.currentSheet.height
+		this.init()
+	}
+
+	get width() {
+		return this.canvas.width
+	}
+
+	get height() {
+		return this.canvas.height
+	}
+
+	public init() {
+		this.prevPoint = {
+			x: this.currentSheet.left,
+			y: this.currentSheet.top,
 		}
+
+		this.prevPoint.x = this.currentSheet.left
+		this.prevPoint.y = this.currentSheet.top
+		this.prevCutPoint = { ...this.prevPoint }
+		this.view.addSheet(this.currentSheet)
+	}
+
+	public addCut({ width, height }: ICutForm) {
+		if (this.isCompleted) {
+			return true
+		}
+
+		const nextPointRight = this.prevCutPoint.x + width
+
+		if (nextPointRight > this.sheetLowerBound.right) {
+			this.prevCutPoint.x = this.prevPoint.x
+			this.prevCutPoint.y = this.maxHeight + this.prevCutPoint.y + this.gap
+			this.maxHeight = height
+			this.isFirstRow = true
+			return this.createEmptyCut(EmptyCut.Bottom)
+		}
+
+		const nextPointBottom = this.prevCutPoint.y + height
+		if (nextPointBottom > this.sheetLowerBound.bottom && this.isFirstRow) {
+			return this.createEmptyCut(EmptyCut.Right)
+		}
+
+		this.isFirstRow = false
+		this.setMaxCuttingHeight(height)
+		this.createCut(width, height)
+	}
+
+	private setMaxCuttingHeight(height: number) {
+		if (this.maxHeight < height) {
+			this.maxHeight = height
+		}
+	}
+
+	private createEmptyCut(value: EmptyCut) {
+		let width = 0
+		let height = 0
+
+		switch (value) {
+			case EmptyCut.Right:
+				width = this.sheetLowerBound.right - this.prevCutPoint.x
+				height = this.maxHeight
+				this.createCut(width, height, 'orange')
+				break
+			case EmptyCut.Bottom:
+				height = this.sheetLowerBound.bottom - this.prevCutPoint.y
+				width = SheetSize.Width
+				this.isCompleted = true
+				this.createCut(width, height, 'orange')
+				break
+		}
+	}
+
+	private createCut(width: number, height: number, fill: string = 'tomato') {
+		const newCut = {
+			id: uuid(),
+			top: this.prevCutPoint.y,
+			left: this.prevCutPoint.x,
+			width,
+			height,
+		}
+		this.cutList.push(newCut)
+		this.view.addCut(newCut, fill)
+		this.prevCutPoint.x += width + this.gap
 	}
 }
