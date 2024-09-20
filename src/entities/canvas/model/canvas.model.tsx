@@ -81,19 +81,15 @@ export class CanvasModel {
 			return true
 		}
 
-		const nextPointRight = this.prevCutPoint.x + width
+		const nextPointRight = Math.floor(this.prevCutPoint.x + width)
+		const nextPointBottom = Math.floor(this.prevCutPoint.y + height)
 
 		if (nextPointRight > this.sheetLowerBound.right) {
-			this.prevCutPoint.x = this.prevPoint.x
-			this.prevCutPoint.y = this.maxHeight + this.prevCutPoint.y + this.gap
-			this.maxHeight = height
-			this.isFirstRow = true
-			return this.createEmptyCut(EmptyCut.Bottom)
+			return this.createEmptyInColumn()
 		}
 
-		const nextPointBottom = this.prevCutPoint.y + height
 		if (nextPointBottom > this.sheetLowerBound.bottom && this.isFirstRow) {
-			return this.createEmptyCut(EmptyCut.Right)
+			return this.createEmptyInLastRow()
 		}
 
 		this.isFirstRow = false
@@ -107,23 +103,21 @@ export class CanvasModel {
 		}
 	}
 
-	private createEmptyCut(value: EmptyCut) {
-		let width = 0
-		let height = 0
+	private createEmptyInColumn() {
+		const width = this.sheetLowerBound.right - this.prevCutPoint.x
+		const height = this.maxHeight
+		this.createCut(width, height, 'orange')
+		this.prevCutPoint.x = this.prevPoint.x
+		this.prevCutPoint.y = this.maxHeight + this.prevCutPoint.y + this.gap
+		this.maxHeight = height
+		this.isFirstRow = true
+	}
 
-		switch (value) {
-			case EmptyCut.Right:
-				width = this.sheetLowerBound.right - this.prevCutPoint.x
-				height = this.maxHeight
-				this.createCut(width, height, 'orange')
-				break
-			case EmptyCut.Bottom:
-				height = this.sheetLowerBound.bottom - this.prevCutPoint.y
-				width = SheetSize.Width
-				this.isCompleted = true
-				this.createCut(width, height, 'orange')
-				break
-		}
+	private createEmptyInLastRow() {
+		const height = this.sheetLowerBound.bottom - this.prevCutPoint.y
+		const width = SheetSize.Width
+		this.isCompleted = true
+		this.createCut(width, height, 'orange')
 	}
 
 	private createCut(width: number, height: number, fill: string = 'tomato') {
