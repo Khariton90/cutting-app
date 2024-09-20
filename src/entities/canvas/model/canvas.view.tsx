@@ -1,19 +1,21 @@
-import { ICut, IRect, ISheet } from '@/features/board'
-import { Canvas, IText, Line, Point, Rect, TPointerEventInfo } from 'fabric'
+import { ICut, ISheet } from '@/features/board'
+import { Canvas, Line, Point, TPointerEventInfo } from 'fabric'
+import { SheetFactory } from './sheet-factory'
+import { CutFactory } from './cut-factory'
 
 export class CanvasView {
 	private canvas: Canvas
 	private GRID_COLOR = '#1976d2'
 	private GRID_CANVAS = 25
 	private strokeDashArray = [2, 4]
-	private SHEET_FILL = 'rgba(255,255,255,0.4)'
-	private FONT_SIZE = 16
-	private sheetList: IRect[] = []
-	private cutList: IRect[] = []
-	private TEXT_INDENT_LEFT_SIDE = 10
+
+	private sheetFactory: SheetFactory
+	private cutFactory: CutFactory
 
 	constructor(canvas: Canvas) {
 		this.canvas = canvas
+		this.sheetFactory = new SheetFactory(this.canvas)
+		this.cutFactory = new CutFactory(this.canvas)
 		this.init()
 	}
 
@@ -21,65 +23,17 @@ export class CanvasView {
 		return this.canvas.width
 	}
 
-	public addSheet({ id, top, left, width, height }: ISheet) {
-		const rect = this.createRect(
-			top,
-			left,
-			width,
-			height,
-			this.SHEET_FILL,
-			'#000'
-		)
-		this.sheetList.push({
-			id,
-			rect,
-		})
+	public addSheet(item: ISheet) {
+		this.sheetFactory.addItem(item)
 	}
 
-	public addCut({ id, top, left, width, height }: ICut, fill: string) {
-		const cutText = `${this.cutList.length + 1} | ${Math.floor(
-			width
-		)}x${Math.floor(height)}`
-
-		const text = new IText(cutText, {
-			fontSize: this.FONT_SIZE,
-			top: top + this.TEXT_INDENT_LEFT_SIDE,
-			left: left + this.TEXT_INDENT_LEFT_SIDE,
-			width,
-			height,
-		})
-
-		const rect = this.createRect(top, left, width, height, fill)
-		this.canvas.add(text)
-		this.cutList.push({
-			id,
-			rect,
-		})
+	public addCut(item: ICut, fill: string) {
+		this.cutFactory.addItem(item, fill)
 	}
 
 	private init() {
 		this.createGrid()
 		this.zoom()
-	}
-
-	private createRect(
-		top: number,
-		left: number,
-		width: number,
-		height: number,
-		fill: string = '#000',
-		stroke: string = 'transparent'
-	) {
-		const rect = new Rect({
-			top,
-			left,
-			width,
-			height,
-			fill,
-			stroke,
-		})
-		this.canvas.add(rect)
-		return rect
 	}
 
 	private createGrid() {

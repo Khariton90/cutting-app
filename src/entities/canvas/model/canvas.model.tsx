@@ -9,11 +9,6 @@ export enum SheetSize {
 	Height = 250,
 }
 
-export enum EmptyCut {
-	Right = 'Right',
-	Bottom = 'Bottom',
-}
-
 export class CanvasModel {
 	public cutList: ICut[] = []
 	public emptyCut: EmptyCutModel
@@ -37,6 +32,7 @@ export class CanvasModel {
 		x: 0,
 		y: 0,
 	}
+	private COLOR_EMPTY = '#ffa500'
 
 	constructor(canvas: Canvas) {
 		this.canvas = canvas
@@ -106,7 +102,7 @@ export class CanvasModel {
 	private createEmptyInColumn() {
 		const width = this.sheetLowerBound.right - this.prevCutPoint.x
 		const height = this.maxHeight
-		this.createCut(width, height, 'orange')
+		this.createCut(width, height, this.COLOR_EMPTY)
 		this.prevCutPoint.x = this.prevPoint.x
 		this.prevCutPoint.y = this.maxHeight + this.prevCutPoint.y + this.gap
 		this.maxHeight = height
@@ -117,7 +113,7 @@ export class CanvasModel {
 		const height = this.sheetLowerBound.bottom - this.prevCutPoint.y
 		const width = SheetSize.Width
 		this.isCompleted = true
-		this.createCut(width, height, 'orange')
+		this.createCut(width, height, this.COLOR_EMPTY)
 	}
 
 	private createCut(width: number, height: number, fill: string = 'tomato') {
